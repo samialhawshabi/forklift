@@ -1,0 +1,69 @@
+// Module included in the following assemblies:
+//
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+
+:_content-type: PROCEDURE
+[id="creating-vddk-image_{context}"]
+= Creating a VDDK image
+
+{the} {project-first} uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer virtual disks from VMware vSphere.
+
+You must download the VMware Virtual Disk Development Kit (VDDK), build a VDDK image, and push the VDDK image to your image registry. You need the VDDK init image path in order to add a VMware source provider. 
+
+[NOTE]
+====
+Storing the VDDK image in a public registry might violate the VMware license terms.
+====
+
+.Prerequisites
+
+* link:https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-version}/html/registry/setting-up-and-configuring-the-registry#configuring-registry-storage-baremetal[{ocp} image registry].
+* `podman` installed.
+* If you are using an external registry, {virt} must be able to access it.
+
+.Procedure
+
+. Create and navigate to a temporary directory:
++
+[source,terminal]
+----
+$ mkdir /tmp/<dir_name> && cd /tmp/<dir_name>
+----
+
+. In a browser, navigate to the link:https://code.vmware.com/sdk/vddk[VMware VDDK download page].
+. Select the latest VDDK version and click *Download*.
+. Save the VDDK archive file in the temporary directory.
+. Extract the VDDK archive:
++
+[source,terminal]
+----
+$ tar -xzf VMware-vix-disklib-<version>.x86_64.tar.gz
+----
+
+. Create a `Dockerfile`:
++
+[source,terminal]
+----
+$ cat > Dockerfile <<EOF
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+COPY vmware-vix-disklib-distrib /vmware-vix-disklib-distrib
+RUN mkdir -p /opt
+ENTRYPOINT ["cp", "-r", "/vmware-vix-disklib-distrib", "/opt"]
+EOF
+----
+
+. Build the VDDK image:
++
+[source,terminal]
+----
+$ podman build . -t <registry_route_or_server_path>/vddk:<tag>
+----
+
+. Push the VDDK image to the registry:
++
+[source,terminal]
+----
+$ podman push <registry_route_or_server_path>/vddk:<tag>
+----
+
+. Ensure that the image is accessible to your {virt} environment.

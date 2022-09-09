@@ -1,0 +1,29 @@
+// Module included in the following assemblies:
+//
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+
+:_content-type: PROCEDURE
+[id="adding-virt-provider_{context}"]
+= Adding {a-virt} destination provider
+
+You can add {a-virt} destination provider to the {project-short} web console in addition to the default {virt} destination provider, which is the provider where you installed {project-short}.
+
+.Prerequisites
+
+* You must have {a-virt} link:https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-version}/html/authentication_and_authorization/using-service-accounts[service account token] with `cluster-admin` privileges.
+
+.Procedure
+
+. In the  {project-short}  web console, click *Providers*.
+. Click *Add provider*.
+. Select *{virt}* from the *Type* list.
+. Complete the following fields:
+
+* *Cluster name*: Specify the cluster name to display in the list of target providers.
+* *URL*: Specify the API endpoint of the cluster.
+* *Service account token*: Specify the `cluster-admin` service account token.
+
+. Click *Check connection* to verify the credentials.
+. Click *Add*.
++
+The provider appears in the list of providers.

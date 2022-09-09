@@ -1,0 +1,32 @@
+// Module included in the following assemblies:
+//
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+
+:_content-type: PROCEDURE
+[id="running-migration-plan_{context}"]
+= Running a migration plan
+
+You can run a migration plan and view its progress in the {project-short} web console.
+
+.Prerequisites
+
+* Valid migration plan.
+
+.Procedure
+
+. Click *Migration plans*.
++
+The *Migration plans* list displays the source and target providers, the number of virtual machines (VMs) being migrated, and the status of the plan.
+
+. Click *Start* beside a migration plan to start the migration.
++
+Warm migration only:
+
+* The precopy stage starts.
+* Click *Cutover* to complete the migration.
+
+. Expand a migration plan to view the migration details.
++
+The migration details screen displays the migration start and end time, the amount of data copied, and a progress pipeline for each VM being migrated.
+
+. Expand a VM to view the migration steps, elapsed time of each step, and its state.
